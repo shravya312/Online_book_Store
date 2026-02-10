@@ -4,9 +4,10 @@ import './BookCard.css';
 interface BookCardProps {
   book: Book;
   onDelete: (id: string) => void;
+  onEdit: (book: Book) => void;
 }
 
-const BookCard = ({ book, onDelete }: BookCardProps) => {
+const BookCard = ({ book, onDelete, onEdit }: BookCardProps) => {
   return (
     <div className="book-card">
       {book.imageUrl && (
@@ -27,12 +28,20 @@ const BookCard = ({ book, onDelete }: BookCardProps) => {
               {book.stock === 0 ? 'Out of Stock' : `Stock: ${book.stock}`}
             </span>
           </div>
-          <button
-            onClick={() => book._id && onDelete(book._id)}
-            className="delete-btn"
-          >
-            Delete
-          </button>
+          <div className="book-actions">
+            <button
+              onClick={() => onEdit(book)}
+              className="edit-btn"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => book._id && onDelete(book._id)}
+              className="delete-btn"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

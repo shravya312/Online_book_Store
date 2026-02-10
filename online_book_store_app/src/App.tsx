@@ -15,6 +15,13 @@ function App() {
     setShowForm(true);
   };
 
+  const handleEditBook = (book: Book) => {
+    setEditingBook(book);
+    setShowForm(true);
+    // Scroll to top when editing
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFormSuccess = () => {
     setShowForm(false);
     setEditingBook(null);
@@ -41,7 +48,7 @@ function App() {
                 + Add New Book
               </button>
             </div>
-            <BookList key={refreshKey} />
+            <BookList key={refreshKey} onEdit={handleEditBook} />
           </>
         ) : (
           <div className="form-container">

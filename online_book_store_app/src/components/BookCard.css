@@ -151,6 +151,13 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  gap: 1rem;
+}
+
+.book-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 .book-price-stock {
@@ -204,6 +211,54 @@
 .book-stock.out-of-stock::before {
   content: '✕';
   background: #dc3545;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(102, 126, 234, 0.35),
+    0 2px 6px rgba(102, 126, 234, 0.2);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.edit-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.edit-btn:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 16px rgba(102, 126, 234, 0.4),
+    0 3px 8px rgba(102, 126, 234, 0.25);
+}
+
+.edit-btn:active {
+  transform: translateY(0);
 }
 
 .delete-btn {

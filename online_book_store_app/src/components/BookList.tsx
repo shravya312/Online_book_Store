@@ -4,7 +4,11 @@ import type { Book, BooksResponse } from '../types/book';
 import BookCard from './BookCard';
 import './BookList.css';
 
-const BookList = () => {
+interface BookListProps {
+  onEdit?: (book: Book) => void;
+}
+
+const BookList = ({ onEdit }: BookListProps = {}) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -113,7 +117,12 @@ const BookList = () => {
       ) : (
         <div className="books-grid">
           {books.map((book) => (
-            <BookCard key={book._id} book={book} onDelete={handleDelete} />
+            <BookCard 
+              key={book._id} 
+              book={book} 
+              onDelete={handleDelete}
+              onEdit={onEdit || (() => {})}
+            />
           ))}
         </div>
       )}
