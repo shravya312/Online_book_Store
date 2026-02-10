@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { api } from '../services/api';
 import type { Book, BooksResponse } from '../types/book';
 import BookCard from './BookCard';
@@ -9,19 +9,38 @@ const BookList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [category, setCategory] = useState('');
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Debounce search term
+  useEffect(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // Wait 500ms after user stops typing
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [searchTerm]);
 
   useEffect(() => {
     fetchBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, category]);
+  }, [debouncedSearchTerm, category]);
 
   const fetchBooks = async () => {
     try {
       setLoading(true);
       setError(null);
       const response: BooksResponse = await api.getBooks({
-        search: searchTerm || undefined,
+        search: debouncedSearchTerm || undefined,
         category: category || undefined,
       });
       if (response.success) {
