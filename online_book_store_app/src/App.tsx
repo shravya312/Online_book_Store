@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
+import ScrollToTop from './components/ScrollToTop';
 import type { Book } from './types/book';
 import './App.css';
 
@@ -54,6 +55,7 @@ function App() {
           </div>
         )}
       </main>
+      <ScrollToTop />
     </div>
   );
 }
